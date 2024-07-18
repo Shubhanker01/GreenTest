@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const Grid = () => {
-    const [ids, setIds] = useState([{id:"",state:false}])
+    const [ids, setIds] = useState([])
     const [point, setPoint] = useState(0)
     const changeColor = () => {
         const grids = document.querySelectorAll('.cl-grid')
@@ -13,32 +13,36 @@ const Grid = () => {
                     setIds([...ids, { id: value.id, state: true }])
                 }
                 else {
-                    ids.map(function (val) {
-                        console.log(val)
-                        if (val.id == value.id && val.state==true) {
-                            console.log("Do not click this it is already green")
-                        }
-                        else if(val.id != value.id && val.state==true){
-                            console.log("")
-                        }
-                        else {
-                            value.style.backgroundColor = 'Green'
-                            setPoint(point + 1)
-                            setIds([...ids, { id: value.id, state: true }])
-                        }
-                    })
+                    if (ids.some(id => id.id === value.id)) {
+                        return;
+                    }
+                    else {
+                        value.style.backgroundColor = 'Green'
+                        setPoint(point + 1)
+                        setIds([...ids, { id: value.id, state: true }])
+                    }
                 }
-            })
+
+            }
+            )
         })
+
+    }
+    const changeToOrange = () => {
+        if (point == 9) {
+            const grids = document.querySelectorAll('.cl-grid')
+            let i = 0
+            ids.forEach(function (id) {
+                setTimeout(() => {
+                    document.getElementById(id.id).style.backgroundColor = 'Orange'
+                }, 2000 * i)
+                i++
+            })
+        }
     }
     useEffect(() => {
-        console.log(point)
-        if (point < 9) {
-            changeColor()
-        }
-        else {
-            console.log('you have reached the end point')
-        }
+        changeColor()
+        changeToOrange()
     }, [ids])
     return (
         <>

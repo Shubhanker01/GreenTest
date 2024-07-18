@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+h1{
+    text-align: center;
+    font-size: 32px;
+    margin-top: 20px;
+}
+.my-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    justify-items: left;
+    width: 162px;
+    margin: 100px auto;
+}
+.my-grid div{
+    height: 50px;
+    width: 50px;
+    border: 2px solid grey;
+    cursor: pointer;
+}
